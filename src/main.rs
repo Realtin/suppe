@@ -19,7 +19,8 @@ fn main() {
     println!("{:?}", vec[vec.len()-1]);
 }
 
-fn get_soup(user: &str) ->Vec<Post>{
+#[no_mangle]
+pub extern fn get_soup(user: &str) ->Vec<Post>{
     let url = format!("http://{}.soup.io/rss", user);
     let mut vec = Vec::new();
 
@@ -32,7 +33,7 @@ fn get_soup(user: &str) ->Vec<Post>{
 
     let rss::Rss(channel) = suppe.parse::<rss::Rss>().unwrap();
 
-    // println!("{:?}", rss);
+    // println!("{:?}", rss);embed
 
     for item in channel.items.into_iter().rev() {
       let item_object = Post {

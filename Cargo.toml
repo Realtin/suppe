@@ -7,3 +7,7 @@ authors = ["Julia <juliakbln@gmail.com>"]
 rss = "0.2.0"
 curl = "0.2.10"
 hyper = "0.6.9"
+
+[lib]
+name = "main"
+crate-type = ["dylib"]
