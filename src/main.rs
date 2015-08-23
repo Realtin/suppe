@@ -6,24 +6,23 @@ extern crate hyper;
 use rss::Rss;
 use std::io::prelude::*;
 
-#[derive(Debug)]
-pub struct Post  {
-    title: String,
-    link: String,
-    description: String,
-}
+// #[derive(Debug)]
+// pub struct Post  {
+//     title: String,
+//     link: String,
+//     description: String,
+// }
 
 fn main() {
     let user = "realtin".to_string();
-    let vec = get_soup(&user);
-    println!("{:?}", vec[vec.len()-1]);
+    let suppe = get_soup(&user);
+    println!("{:?}", suppe);
 }
 
 #[no_mangle]
 pub extern fn get_soup(user: &str) ->Vec<Post>{
     let url = format!("http://{}.soup.io/rss", user);
-    let mut vec = Vec::new();
-
+    let mut s ="";
     let client = hyper::Client::new();
     let mut response = client.get(&url).send().unwrap();
 
@@ -36,14 +35,14 @@ pub extern fn get_soup(user: &str) ->Vec<Post>{
     // println!("{:?}", rss);embed
 
     for item in channel.items.into_iter().rev() {
-      let item_object = Post {
-           title: item.title.unwrap(),
-           link: item.link.unwrap(),
-           description: item.description.unwrap(),
-        };
-        vec.push(item_object);
+        s.push_str(item.link.unwrap() + " * ");
+    //   let item_object = Post {
+    //        title: item.title.unwrap(),
+    //        link: item.link.unwrap(),
+    //        description: item.description.unwrap(),
+    //     };
     //   println!("{:?}", description);
     }
     // println!("{:?}", &vec);
-    return vec;
+    return s;
 }
